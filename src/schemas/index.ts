@@ -11,3 +11,9 @@ export const LoginSchema = z.object({
   // not recommended to limit pword length for login above 1 since required min length may change and old passwords may have old min lengths
   // okay to add .min() to password for RegisterSchema
 });
+
+export const RegisterSchema = z.object({
+  email: z.string().email({ message: "Email is required / Invalid email" }),
+  password: z.string().min(6, { message: "Minimum 6 characters required" }),
+  name: z.string().min(1, { message: "Name is required" }),
+});
