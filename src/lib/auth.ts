@@ -3,9 +3,21 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
+// tutorial solution
+// import { UserRole } from "@prisma/client";
 import authConfig from "~/lib/auth.config";
 import { db } from "~/lib/db";
 import { getUserById } from "~/data/user";
+
+// auth.js docs solution for augmenting session type
+// import { type DefaultSession } from "next-auth";
+// declare module "next-auth" {
+//   interface Session {
+//     user: {
+//       role: UserRole;
+//     } & DefaultSession["user"];
+//   }
+// }
 
 export const {
   handlers, // auth.js docs
@@ -38,6 +50,10 @@ export const {
       }
 
       if (session.user && token.role) {
+        // tutorial solution since he couldn't augment JWT token
+        // session.user.role = token.role as UserRole;
+
+        // auth.js docs solution
         session.user.role = token.role;
       }
 
