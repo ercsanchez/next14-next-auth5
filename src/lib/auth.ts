@@ -10,7 +10,7 @@ export const {
   handlers, // auth.js docs
   // handlers: { GET, POST }, // tutorial
   auth,
-  // signIn, // auth.js docs
+  signIn, // auth.js docs
   // signOut, // auth.js docs
 } = NextAuth({
   ...authConfig,
