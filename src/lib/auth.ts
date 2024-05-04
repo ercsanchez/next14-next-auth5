@@ -18,26 +18,28 @@ export const {
   session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user, profile, trigger }) {
-      token.customField = "custom value";
-      console.log({ "jwt token": token });
+      // console.log({ "jwt token": token });
       return token;
     },
     async session({ token, session }) {
       // if (session.user) { // tutorial
       // should also check if token.customField exists
-      if (session.user && token.customField) {
-        session.user.customField = token.customField;
+      if (session.user && token.sub) {
+        session.user.id = token.sub;
       }
-      console.log({ "session token": token, session });
-      return session;
 
       // alternative solution
-      // const modifiedSession = {
-      //   ...session,
-      //   user: { ...session.user, customField: token.customField },
-      // };
-      // console.log({ "session token": token, modifiedSession });
-      // return modifiedSession;
+      // if (session.user && token.sub) {
+      //   const modifiedSession = {
+      //     ...session,
+      //     user: { ...session.user, id: token.sub },
+      //   };
+      //   console.log({ "session token": token, modifiedSession });
+      //   return modifiedSession;
+      // }
+
+      // console.log({ "session token": token, session });
+      return session;
     },
   },
 });
