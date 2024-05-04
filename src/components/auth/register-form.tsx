@@ -31,6 +31,8 @@ export function RegisterForm() {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: { email: "", password: "", name: "" },
+    // for quick testing of registration w/out having to input form fields
+    // defaultValues: { email: "test@mail.com", password: "123456", name: "test" },
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {

@@ -32,7 +32,7 @@ export function LoginForm() {
     resolver: zodResolver(LoginSchema),
     defaultValues: { email: "", password: "" },
     // for quick testing of login w/out having to input form fields
-    // defaultValues: { email: "test10@mail.com", password: "123456" },
+    // defaultValues: { email: "test@mail.com", password: "123456" },
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
