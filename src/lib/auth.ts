@@ -11,7 +11,7 @@ export const {
   // handlers: { GET, POST }, // tutorial
   auth,
   signIn, // auth.js docs
-  // signOut, // auth.js docs
+  signOut, // auth.js docs
 } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
