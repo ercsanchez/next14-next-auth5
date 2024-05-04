@@ -16,6 +16,30 @@ export const {
   ...authConfig,
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
+  callbacks: {
+    async jwt({ token, user, profile, trigger }) {
+      token.customField = "custom value";
+      console.log({ "jwt token": token });
+      return token;
+    },
+    async session({ token, session }) {
+      // if (session.user) { // tutorial
+      // should also check if token.customField exists
+      if (session.user && token.customField) {
+        session.user.customField = token.customField;
+      }
+      console.log({ "session token": token, session });
+      return session;
+
+      // alternative solution
+      // const modifiedSession = {
+      //   ...session,
+      //   user: { ...session.user, customField: token.customField },
+      // };
+      // console.log({ "session token": token, modifiedSession });
+      // return modifiedSession;
+    },
+  },
 });
 
 // alternative solution for initial middleware setup
