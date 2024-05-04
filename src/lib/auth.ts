@@ -1,7 +1,10 @@
 // NOTE: in the tutorial, this file is located in the root of the project (if not using src) or in the root of src (if using src)
 
 import NextAuth from "next-auth";
-import Github from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+
+import authConfig from "~/lib/auth.config";
+import { db } from "~/lib/db";
 
 export const {
   handlers, // auth.js docs
@@ -10,7 +13,9 @@ export const {
   // signIn, // auth.js docs
   // signOut, // auth.js docs
 } = NextAuth({
-  providers: [Github],
+  ...authConfig,
+  adapter: PrismaAdapter(db),
+  session: {strategy: "jwt"}
 });
 
 // alternative solution for initial middleware setup
