@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import authConfig from "~/lib/auth.config";
 import { db } from "~/lib/db";
+import { getUserById } from "~/data/user";
 
 export const {
   handlers, // auth.js docs
@@ -18,6 +19,14 @@ export const {
   session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user, profile, trigger }) {
+      if (!token.sub) return token;
+
+      const existingUser = await getUserById(token.sub);
+
+      if (!existingUser) return token;
+
+      token.role = existingUser.role;
+
       // console.log({ "jwt token": token });
       return token;
     },
@@ -26,6 +35,10 @@ export const {
       // should also check if token.customField exists
       if (session.user && token.sub) {
         session.user.id = token.sub;
+      }
+
+      if (session.user && token.role) {
+        session.user.role = token.role;
       }
 
       // alternative solution
