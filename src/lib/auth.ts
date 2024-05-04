@@ -12,3 +12,10 @@ export const {
 } = NextAuth({
   providers: [Github],
 });
+
+// alternative solution for initial middleware setup
+// export const authOptions = { providers: [Github] };
+// export const {
+//   handlers,
+//   auth,
+// } = NextAuth(authOptions);
