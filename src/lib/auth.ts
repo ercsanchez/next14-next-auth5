@@ -30,6 +30,18 @@ export const {
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   callbacks: {
+    // async signIn({ user }) {
+    //   console.log({ "signIn callback user argument": user });
+
+    //   // tutorial code: this is unnecessary query since user is already passed from the credentials provider's authorize function
+    //   // we can just comment this out and proceed to conditional check
+    //   // const existingUser = await getUserById(user.id);
+
+    //   const existingUser = user;
+    //   if (!existingUser || !existingUser.emailVerified) return false;
+
+    //   return true;
+    // },
     async jwt({ token, user, profile, trigger }) {
       if (!token.sub) return token;
 
