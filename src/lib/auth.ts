@@ -15,7 +15,7 @@ export const {
 } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
-  session: {strategy: "jwt"}
+  session: { strategy: "jwt" },
 });
 
 // alternative solution for initial middleware setup
