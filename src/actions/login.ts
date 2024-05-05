@@ -35,7 +35,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     // next.js requires to throw the error, otherwise, it won't redirect
     throw error;
   }
-  return { success: "Email sent!" };
+
+  // Unnecessary since will be redirected on successful login
+  // return { success: "Email sent!" };
 };
 
 // signIn() for use in server component or server action

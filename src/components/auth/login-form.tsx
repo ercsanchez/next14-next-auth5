@@ -51,7 +51,10 @@ export function LoginForm() {
         // add check if data.error or data.success is undefined
         if (data) {
           setError(data.error);
-          setSuccess(data.success);
+          // use "setError(data?.error);" if not checking data is not undefined"
+
+          // TODO: Add when we add 2FA
+          // setSuccess(data.success);
         }
       });
     });
