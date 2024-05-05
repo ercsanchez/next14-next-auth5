@@ -37,3 +37,25 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
   return { success: "Email sent!" };
 };
+
+// signIn() for use in server component or server action
+// export const oauthLogin = async (provider: string) => {
+//   try {
+//     await signIn(provider, { redirectTo: DEFAULT_LOGIN_REDIRECT });
+//   } catch (error) {
+//     if (error instanceof AuthError) {
+//       switch (error.type) {
+//         case "OAuthSignInError":
+//           return {
+//             error: `Invalid ${provider} credentials!`,
+//           };
+//         default:
+//           return {
+//             error: "Something went wrong!",
+//           };
+//       }
+//     }
+//     throw error;
+//   }
+//   return { success: "Succcessfully logged in!" };
+// };
