@@ -29,6 +29,10 @@ export const {
   ...authConfig,
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
   events: {
     // executes when an oauth account is linked to a user
     // its assumed that the oauth provider is reliable and already takes care to verify user's email, so we only need to verify the email for credentials provider (w/c doesnt fire linkAccount event on registration)
