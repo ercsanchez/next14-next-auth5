@@ -29,6 +29,16 @@ export const {
   ...authConfig,
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
+  events: {
+    // executes when an oauth account is linked to a user
+    // its assumed that the oauth provider is reliable and already takes care to verify user's email, so we only need to verify the email for credentials provider (w/c doesnt fire linkAccount event on registration)
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
     // async signIn({ user }) {
     //   console.log({ "signIn callback user argument": user });
