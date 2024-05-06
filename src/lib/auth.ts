@@ -45,11 +45,14 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
+      // console.log("signIn callback user argument:", { user, account });
+
       // skip email verification for providers other than credentials
+      // account?.type !== "credentials" also works
       if (account?.provider !== "credentials") return true;
 
-      // if credentials provider and email not verified
       const existingUser = await getUserById(user.id);
+      // if credentials provider and email not verified
       if (!existingUser?.emailVerified) return false;
 
       // TODO: Add 2FA check
