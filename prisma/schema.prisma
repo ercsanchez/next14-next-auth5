@@ -80,3 +80,13 @@ model VerificationToken {
 
   @@unique([email, token])
 }
+
+// safer to keep tokens separate, security-wise
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email,token])
+}
