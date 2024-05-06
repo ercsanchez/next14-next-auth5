@@ -8,6 +8,7 @@ import { signIn } from "~/lib/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 import { generateVerificationToken } from "~/lib/tokens";
 import { getUserByEmail } from "~/data/user";
+import { sendVerificationEmail } from "~/lib/mail";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -28,6 +29,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(
       existingUser.email,
+    );
+
+    // no need to check if entered password matches db record, since this will be done in Credentials authorize() and we are mainly concerned with checking if user's email has been verified before allowing login, at this point
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
     );
 
     return { success: "Confirmation email sent!" };
