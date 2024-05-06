@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
 import { CardWrapper } from "~/components/auth/card-wrapper";
@@ -101,6 +102,9 @@ export function LoginForm() {
                       type="password"
                     />
                   </FormControl>
+                  <Button size="sm" variant="link" className="px-0 font-normal">
+                    <Link href="/auth/reset">Forgot password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
