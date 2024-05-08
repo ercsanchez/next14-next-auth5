@@ -1,14 +1,23 @@
-import { auth, signOut } from "~/lib/auth";
+"use client";
 
-export default async function SettingsPage() {
-  const session = await auth();
+// import { auth, signOut } from "~/lib/auth";
+import { useSession, signOut } from "next-auth/react";
+
+export default function SettingsPage() {
+  // const session = await auth();
   // console.log("session", session);
+
+  const session = useSession();
+
+  const onClick = () => {
+    signOut();
+  };
 
   return (
     <div>
       <p>Settings Page</p>
       <p>Session: {JSON.stringify(session)}</p>
-      <form
+      {/* <form
         action={async () => {
           "use server";
           // per tutorial, signOut will redirect to /auth/login because of middleware but this isn't working
@@ -19,7 +28,10 @@ export default async function SettingsPage() {
         }}
       >
         <button type="submit">Sign Out</button>
-      </form>
+      </form> */}
+      <button type="button" onClick={onClick}>
+        Sign Out
+      </button>
     </div>
   );
 }
