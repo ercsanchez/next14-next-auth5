@@ -94,6 +94,7 @@ export const {
       if (!existingUser) return token;
 
       token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       // console.log({ "jwt token": token });
       return token;
@@ -111,6 +112,13 @@ export const {
 
         // auth.js docs solution
         session.user.role = token.role;
+      }
+
+      if (session.user) {
+        // tutorial solution but not needed since we augmented JWT token to include isTwoFactorEnabled's type
+        // session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
       }
 
       // alternative solution
@@ -135,3 +143,10 @@ export const {
 //   handlers,
 //   auth,
 // } = NextAuth(authOptions);
+
+// per tutorial: auth.ts (containing next-auth options) and auth.config.ts file are located at src/ root dir, while this utility function is located at src/lib/auth.ts
+export const currentUser = async () => {
+  const session = await auth();
+
+  return session?.user;
+};
