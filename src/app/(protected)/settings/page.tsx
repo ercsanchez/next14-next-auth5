@@ -1,17 +1,19 @@
 "use client";
 
 // import { auth, signOut } from "~/lib/auth";
-import {
-  useSession,
-  // signOut
-} from "next-auth/react";
+import {} from // useSession,
+// signOut
+"next-auth/react";
 import { logout } from "~/actions/logout";
+import { useCurrentUser } from "~/hooks/use-current-user";
 
 export default function SettingsPage() {
   // const session = await auth();
   // console.log("session", session);
 
-  const session = useSession();
+  // const session = useSession();
+
+  const user = useCurrentUser();
 
   const onClick = () => {
     // signOut();
@@ -23,7 +25,7 @@ export default function SettingsPage() {
   return (
     <div>
       <p>Settings Page</p>
-      <p>Session: {JSON.stringify(session)}</p>
+      <p>Session: {JSON.stringify(user)}</p>
       {/* <form
         action={async () => {
           "use server";
