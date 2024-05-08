@@ -23,9 +23,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div>
-      <p>Settings Page</p>
-      <p>Session: {JSON.stringify(user)}</p>
+    <div className="rounded-xl bg-white p-10">
       {/* <form
         action={async () => {
           "use server";
