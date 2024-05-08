@@ -150,3 +150,10 @@ export const currentUser = async () => {
 
   return session?.user;
 };
+
+// for getting current user's role on server side (server components and actions)
+export const currentRole = async () => {
+  const session = await auth();
+
+  return session?.user?.role;
+};
