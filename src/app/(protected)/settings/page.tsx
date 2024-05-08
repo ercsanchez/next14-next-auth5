@@ -1,7 +1,11 @@
 "use client";
 
 // import { auth, signOut } from "~/lib/auth";
-import { useSession, signOut } from "next-auth/react";
+import {
+  useSession,
+  // signOut
+} from "next-auth/react";
+import { logout } from "~/actions/logout";
 
 export default function SettingsPage() {
   // const session = await auth();
@@ -10,7 +14,10 @@ export default function SettingsPage() {
   const session = useSession();
 
   const onClick = () => {
-    signOut();
+    // signOut();
+
+    // using server action for signOut
+    logout();
   };
 
   return (
@@ -29,9 +36,19 @@ export default function SettingsPage() {
       >
         <button type="submit">Sign Out</button>
       </form> */}
+
+      {/* <button type="button" onClick={onClick}>
+        Sign Out
+      </button> */}
+
+      {/* using server action for signOut */}
       <button type="button" onClick={onClick}>
         Sign Out
       </button>
+      {/* this also works instead of a single button */}
+      {/* <form action={logout}>
+        <button type="submit">Sign Out</button>
+      </form> */}
     </div>
   );
 }
