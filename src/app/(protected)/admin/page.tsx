@@ -9,11 +9,25 @@
 // }
 
 import { UserRole } from "@prisma/client";
+import { toast } from "sonner";
+
 import { RoleGate } from "~/components/auth/role-gate";
 import { FormSuccess } from "~/components/form-success";
+import { Button } from "~/components/ui/button";
 import { Card, CardHeader, CardContent } from "~/components/ui/card";
 
 export default function AdminPage() {
+  const onApiRouteClick = () => {
+    fetch("/api/admin").then((res) => {
+      if (res.ok) {
+        console.log("OKAY");
+        toast.success("Allowed API Route!");
+      } else {
+        toast.error("Forbidden API Route!");
+      }
+    });
+  };
+
   return (
     <Card className="w-[600px]">
       <CardHeader>
@@ -23,6 +37,11 @@ export default function AdminPage() {
         <RoleGate allowedRole={UserRole.ADMIN}>
           <FormSuccess message="You are allowed to view this content!" />
         </RoleGate>
+
+        <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
+          <p>Admin-only API Route</p>
+          <Button onClick={onApiRouteClick}>Click to test</Button>
+        </div>
       </CardContent>
     </Card>
   );
