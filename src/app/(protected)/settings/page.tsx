@@ -1,54 +1,32 @@
 "use client";
 
-// import { auth, signOut } from "~/lib/auth";
-import {} from // useSession,
-// signOut
-"next-auth/react";
-import { logout } from "~/actions/logout";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useTransition } from "react";
+import { useSession } from "next-auth/react";
+
+import { Button } from "~/components/ui/button";
+import { Card, CardHeader, CardContent } from "~/components/ui/card";
+import { settings } from "~/actions/settings";
 
 export default function SettingsPage() {
-  // const session = await auth();
-  // console.log("session", session);
-
-  // const session = useSession();
-
-  const user = useCurrentUser();
+  const { update } = useSession();
+  const [isPending, startTransition] = useTransition();
 
   const onClick = () => {
-    // signOut();
-
-    // using server action for signOut
-    logout();
+    startTransition(() => {
+      settings({ name: "New Name!" }).then(() => update());
+    });
   };
 
   return (
-    <div className="rounded-xl bg-white p-10">
-      {/* <form
-        action={async () => {
-          "use server";
-          // per tutorial, signOut will redirect to /auth/login because of middleware but this isn't working
-          // await signOut();
-
-          // fix: will now redirect to /auth/login after signOut
-          await signOut({ redirectTo: "/auth/login" });
-        }}
-      >
-        <button type="submit">Sign Out</button>
-      </form> */}
-
-      {/* <button type="button" onClick={onClick}>
-        Sign Out
-      </button> */}
-
-      {/* using server action for signOut */}
-      <button type="button" onClick={onClick}>
-        Sign Out
-      </button>
-      {/* this also works instead of a single button */}
-      {/* <form action={logout}>
-        <button type="submit">Sign Out</button>
-      </form> */}
-    </div>
+    <Card className="w-[600px]">
+      <CardHeader>
+        <p className="text-center text-2xl font-semibold">⚙ Settings</p>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Button onClick={onClick} disabled={isPending}>
+          Update name
+        </Button>
+      </CardContent>
+    </Card>
   );
 }

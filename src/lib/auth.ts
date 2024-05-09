@@ -96,6 +96,10 @@ export const {
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
+      // model fields that can be updated by the user in the settings page
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+
       // console.log({ "jwt token": token });
       return token;
     },
@@ -119,6 +123,12 @@ export const {
         // session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
 
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+      }
+
+      // model fields that can be updated by the user in the settings page
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email as string;
       }
 
       // alternative solution
