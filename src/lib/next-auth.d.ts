@@ -18,6 +18,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     role: UserRole;
     isTwoFactorEnabled: boolean;
+    isOAuth: boolean;
   }
 }
 
@@ -26,6 +27,7 @@ declare module "next-auth/jwt" {
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole;
   isTwoFactorEnabled: boolean;
+  isOAuth: boolean;
 };
 
 // isn't this the correct way to add the type or the order doesn't matter?

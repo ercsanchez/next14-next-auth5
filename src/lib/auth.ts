@@ -9,6 +9,7 @@ import authConfig from "~/lib/auth.config";
 import { db } from "~/lib/db";
 import { getUserById } from "~/data/user";
 import { getTwoFactorConfirmationByUserId } from "~/data/two-factor-confirmation";
+import { getAccountByUserId } from "~/data/account";
 
 // auth.js docs solution for augmenting session type
 // import { type DefaultSession } from "next-auth";
@@ -93,12 +94,15 @@ export const {
 
       if (!existingUser) return token;
 
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       // model fields that can be updated by the user in the settings page
       token.name = existingUser.name;
       token.email = existingUser.email;
+      token.isOAuth = !!existingAccount;
 
       // console.log({ "jwt token": token });
       return token;
@@ -129,6 +133,7 @@ export const {
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email as string;
+        session.user.isOAuth = token.isOAuth;
       }
 
       // alternative solution
