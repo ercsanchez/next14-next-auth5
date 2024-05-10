@@ -102,6 +102,8 @@ export const {
       // model fields that can be updated by the user in the settings page
       token.name = existingUser.name;
       token.email = existingUser.email;
+
+      // type coercion to boolean
       token.isOAuth = !!existingAccount;
 
       // console.log({ "jwt token": token });
