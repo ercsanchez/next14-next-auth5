@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { Button } from "~/components/ui/button";
 import { UserButton } from "~/components/auth/user-button";
+import { UserButton as ClerkUserButton } from "@clerk/nextjs";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -35,6 +36,7 @@ export const Navbar = () => {
         </Button>
       </div>
       <UserButton />
+      <ClerkUserButton afterSignOutUrl="/sign-in" />
     </nav>
   );
 };

@@ -23,9 +23,16 @@ export default function Home() {
         </h1>
         <p className="text-lg text-white">A simple authentication service</p>
         <div>
-          <LoginButton asChild mode="redirect">
+          <LoginButton asChild mode="redirect" route="/auth/login">
             <Button variant="secondary" size="lg">
-              Sign in
+              NextAuth Sign in
+            </Button>
+          </LoginButton>
+        </div>
+        <div>
+          <LoginButton asChild mode="redirect" route="/sign-in">
+            <Button variant="secondary" size="lg">
+              Clerk Sign in
             </Button>
           </LoginButton>
         </div>
