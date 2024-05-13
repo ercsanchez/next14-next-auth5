@@ -27,6 +27,7 @@ export const {
   auth,
   signIn, // auth.js docs
   signOut, // auth.js docs
+  unstable_update,
 } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
@@ -129,6 +130,7 @@ export const {
     },
     async session({ token, session }) {
       console.log("callback: session");
+      // console.log({ session });
       // if (session.user) { // tutorial
       // should also check if token.customField exists
       if (session.user && token.sub) {

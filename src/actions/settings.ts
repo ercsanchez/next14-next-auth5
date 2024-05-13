@@ -7,6 +7,7 @@ import { db } from "~/lib/db";
 import { SettingsSchema } from "~/schemas";
 import { getUserById, getUserByEmail } from "~/data/user";
 import { currentUser } from "~/lib/auth";
+// import { unstable_update } from "~/lib/auth";
 import { generateVerificationToken } from "~/lib/tokens";
 import { sendVerificationEmail } from "~/lib/mail";
 
@@ -61,10 +62,24 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     values.newPassword = undefined;
   }
 
-  await db.user.update({
+  const updatedUser = await db.user.update({
     where: { id: dbUser.id },
     data: { ...values },
   });
+
+  // only needed to update session, server-side for server components
+  // client components need to update session from the client
+  // unstable_update({ user: updatedUser });
+  // or
+  // only pass User fields that are stored in session
+  // unstable_update({
+  //   user: {
+  //     name: updatedUser.name,
+  //     email: updatedUser.email,
+  //     isTwoFactorEnabled: updatedUser.isTwoFactorEnabled,
+  //     role: updatedUser.role,
+  //   },
+  // });
 
   return { success: "Settings updated!" };
 };
