@@ -46,7 +46,24 @@ export const {
     },
   },
   callbacks: {
+    // async authorized({ auth, request }) {
+    //   console.log("callback: authorized");
+    //   console.log("auth", auth);
+    //   console.log("request", request);
+    //   return true;
+    // },
+    // async redirect({ url, baseUrl }) {
+    //   console.log("callback: redirect");
+    //   console.log("url", url);
+    //   console.log("baseUrl", baseUrl);
+    //   // Allows relative callback URLs
+    //   if (url.startsWith("/")) return `${baseUrl}${url}`;
+    //   // Allows callback URLs on the same origin
+    //   else if (new URL(url).origin === baseUrl) return url;
+    //   return baseUrl;
+    // },
     async signIn({ user, account }) {
+      console.log("callback: signIn");
       // console.log("signIn callback user argument:", { user, account });
 
       // skip email verification for providers other than credentials
@@ -88,6 +105,7 @@ export const {
     //   return true;
     // },
     async jwt({ token, user, profile, trigger }) {
+      console.log("callback: jwt");
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
@@ -110,6 +128,7 @@ export const {
       return token;
     },
     async session({ token, session }) {
+      console.log("callback: session");
       // if (session.user) { // tutorial
       // should also check if token.customField exists
       if (session.user && token.sub) {
