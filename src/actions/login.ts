@@ -16,7 +16,10 @@ import { getUserByEmail } from "~/data/user";
 import { getTwoFactorConfirmationByUserId } from "~/data/two-factor-confirmation";
 import { getTwoFactorTokenByEmail } from "~/data/two-factor-token";
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
+export const login = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null,
+) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -88,7 +91,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     }); // explicitly setting the redirect (for clarity), even though middleware will redirect if user is logged in
   } catch (error) {
     if (error instanceof AuthError) {

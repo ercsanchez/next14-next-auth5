@@ -51,7 +51,17 @@ export default auth((req) => {
   if (!isLoggedIn && !isPublicRoute) {
     // per tutorial: but not updating the url to /auth/login after signOut
     // url is still /settings after signOut, causing login error when immediately logging back in | need to refresh page
-    return Response.redirect(new URL("/auth/login", nextUrl));
+
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+    );
 
     // possible fixes for url not updating to correct path after signOut:
 
