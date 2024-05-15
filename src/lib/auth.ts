@@ -71,7 +71,7 @@ export const {
       // account?.type !== "credentials" also works
       if (account?.provider !== "credentials") return true;
 
-      const existingUser = await getUserById(user.id);
+      const existingUser = await getUserById(user.id as string);
       // if credentials provider and email not verified
       if (!existingUser?.emailVerified) return false;
 
